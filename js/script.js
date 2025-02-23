@@ -29,9 +29,13 @@ class PlayerManager {
     }
 
     deletePlayer(index) {
-        this.players.splice(index, 1);
-        this.savePlayers();
-        this.renderPlayers();
+        const confirmation = confirm("Tem certeza que deseja deletar este jogador?");
+    
+        if (confirmation) {
+            this.players.splice(index, 1); 
+            this.savePlayers(); 
+            this.renderPlayers(); 
+        }
     }
 
     updateStat(index, stat, expression) {
