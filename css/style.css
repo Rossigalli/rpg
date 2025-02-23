@@ -1,0 +1,123 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+
+.container{
+    width: 100vw;
+    height: 100vh;
+    
+    display: flex;
+    overflow: hidden;
+}
+
+#Main{
+    flex-grow: 1;
+}
+
+#File-in-out{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+
+    img:hover{
+        transform: scale(1.2);
+        cursor: pointer;
+    }
+}
+
+#Sidebar{
+    width: 100vw;
+    max-width: 300px;
+    height: 100vh;
+    
+    display: flex;
+    flex-direction: column;
+
+    border: 1px solid black;
+    overflow: hidden auto;
+}
+
+.player{
+    height: 90px;
+
+    display: flex;
+    align-items: center;
+
+    border: 1px solid black;
+}
+.player-image{
+    width: 80px;
+    height: 80px;
+}
+
+.player-description{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 0px 10px;
+    gap: 5px;
+}
+
+.player-name{
+    display: flex;
+    align-items: center;
+
+    input{
+        min-width: 10px;
+        width: 0px;
+        flex-grow: 1;
+        text-overflow: ellipsis;
+
+        &:disabled{
+            background-color: transparent;
+            border: none;
+        }
+    }
+
+    img{
+        padding: 5px;
+
+        &:hover{
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+    }
+}
+
+.player-stats{
+    display: flex;
+    flex-wrap: wrap;
+
+    column-gap: 16px;
+    row-gap: 4px;
+}
+
+.stats{
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 14px;
+
+    &:hover{
+        transform: scale(1.2);
+        cursor: pointer;
+    }
+}
+
+#NewPlayer{
+    height: fit-content;
+    text-align: center;
+    padding: 8px 0px;
+    border: 1px solid black;
+
+    &:hover{
+        background-color: gray;
+        color: white;
+        cursor: pointer;
+    }
+}
