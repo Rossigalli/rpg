@@ -84,6 +84,13 @@ class PlayerManager {
             this.updatePlayerName(index, input.value);
             input.disabled = true;
         });
+
+        input.addEventListener("keypress", (event) => {
+            if (event.key === "Enter") {
+                this.updatePlayerName(index, input.value);
+                input.disabled = true;
+            }
+        });
     }
 
     promptStatUpdate(index, stat) {
