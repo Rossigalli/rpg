@@ -16,25 +16,28 @@ class PlayerManager {
 
     populateDefault(){
         this.players.forEach((player, index) => {
-            player.vida = player.vida || 0,
-            player.mana = player.mana || 0,
+            player.vida = player.vida || 0
+            player.manab = Number(player.manab) || 0
+            console.log(player.name)
+            console.log(player.manab)
+            player.mana = player.mana || 0
             player.name = player.name || ''
-            player.clan = player.clan || "",
-            player.caminho = player.caminho || "",
-            player.vitalidade = player.vitalidade || 0,
-            player.energia = player.energia || 0,
-            player.ataque = player.ataque || 0,
-            player.defesa = player.defesa || 0,
-            player.arma = player.arma || "",
-            player.armadura = player.armadura || "",
-            player.forca = player.forca || 0,
-            player.destreza = player.destreza || 0,
-            player.resistencia = player.resistencia || 0,
-            player.resiliencia = player.resiliencia || 0,
-            player.precisao = player.precisao || 0,
-            player.sabedoria = player.sabedoria || 0,
-            player.percepcao = player.percepcao || 0,
+            player.clan = player.clan || ""
+            player.caminho = player.caminho || ""
+            player.ataque = player.ataque || 0
+            player.defesa = player.defesa || 0
+            player.arma = player.arma || ""
+            player.armadura = player.armadura || ""
+            player.forca = player.forca || 0
+            player.destreza = player.destreza || 0
+            player.resistencia = player.resistencia || 0
+            player.resiliencia = player.resiliencia || 0
+            player.precisao = player.precisao || 0
+            player.sabedoria = player.sabedoria || 0
+            player.percepcao = player.percepcao || 0
             player.passivas = player.passivas || []
+            player.tecnicas = player.tecnicas || []
+            player.statusen = player.statusen || 0
         })
 
     }
@@ -47,16 +50,15 @@ class PlayerManager {
         const name = `Jogador ${this.players.length + 1}`;
         const player = {
             vida: 100,
-            mana: 100,
+            manab: 100,
+            mana: 0,
             name,
             clan: "Clan Desconhecido",
             caminho: "Caminho Desconhecido",
-            vitalidade: 100,
-            energia: 100,
             ataque: 10,
             defesa: 5,
-            arma: "Espada",
-            armadura: "Armadura de Ferro",
+            arma: "",
+            armadura: "",
             forca: 10,
             destreza: 10,
             resistencia: 10,
@@ -64,7 +66,9 @@ class PlayerManager {
             precisao: 10,
             sabedoria: 10,
             percepcao: 10,
-            passivas: ["Regeneração Rápida"]
+            statusen: 0,
+            passivas: [],
+            tecnicas: []
         };
         this.players.push(player);
         this.savePlayers();
@@ -102,24 +106,24 @@ class PlayerManager {
         this.players[index][stat] = value;
         this.savePlayers();
         
-        if(stat == "name"){
+        if(stat == "name" || stat == "statusen" || stat == "manab"){
             this.renderPlayers()
         }
     }
 
-    updatePlayerPassiva(index, passivaIndex, value) {
-        this.players[index].passivas[passivaIndex] = value;
+    updatePlayerTecPas(stats, index, tecPasIndex, value) {
+        this.players[index][stats][tecPasIndex] = value;
         this.savePlayers();
     }
 
-    addPassiva(index) {
-        this.players[index].passivas.push("Nova Passiva");
+    addTecPas(stats, index) {
+        this.players[index][stats].push("");
         this.savePlayers();
         this.showPlayerDetails(index);
     }
 
-    removePassiva(index, passivaIndex) {
-        this.players[index].passivas.splice(passivaIndex, 1);
+    removeTecPas(stats, index, tecPasIndex) {
+        this.players[index][stats].splice(tecPasIndex, 1);
         this.savePlayers();
         this.showPlayerDetails(index);
     }
@@ -150,9 +154,9 @@ class PlayerManager {
                             <img width="15px" height="15px" title="Vida" src="./assets/icons/heart-solid.svg" alt="Vida">
                             <p>${player.vida}</p>
                         </div>
-                        <div class="stats" onclick="manager.promptStatUpdate(${index}, 'mana')">
-                            <img width="15px" height="15px" title="Mana" src="./assets/icons/droplet-solid.svg" alt="Mana">
-                            <p>${player.mana}</p>
+                        <div title="Mana (Mana + Mana base + 10 * Status EN)" class="stats" onclick="manager.promptStatUpdate(${index}, 'mana')">
+                            <img width="15px" height="15px" src="./assets/icons/droplet-solid.svg" alt="Mana">
+                            <p>${player.manab + player.mana + (10 * player.statusen)}</p>
                         </div>
                     </div>
                 </div>`;
@@ -212,8 +216,8 @@ class PlayerManager {
                 
                 <div class="info-block border col-10">
                     <div>
-                        <p><strong>Vitalidade:</strong><input type="number" value="${player.vitalidade}" onkeyup="manager.updateSheetStat(${index}, 'vitalidade', this.value)"></p>
-                        <p><strong>Energia:</strong><input type="number" value="${player.energia}" onkeyup="manager.updateSheetStat(${index}, 'energia', this.value)"></p>
+                        <p><strong>Vida:</strong><input type="number" value="${player.vida}" onkeyup="manager.updateSheetStat(${index}, 'vida', this.value)"></p>
+                        <p><strong>Mana base:</strong><input type="number" value="${player.manab}" onkeyup="manager.updateSheetStat(${index}, 'manab', this.value)"></p>
                         <p><strong>Ataque:</strong><input type="number" value="${player.ataque}" onkeyup="manager.updateSheetStat(${index}, 'ataque', this.value)"></p>
                         <p><strong>Defesa:</strong><input type="number" value="${player.defesa}" onkeyup="manager.updateSheetStat(${index}, 'defesa', this.value)"></p>
                     </div>
@@ -233,6 +237,7 @@ class PlayerManager {
                     <p><strong>Precisão:</strong><input type="number" value="${player.precisao}" onkeyup="manager.updateSheetStat(${index}, 'precisao', this.value)"></p>
                     <p><strong>Sabedoria:</strong><input type="number" value="${player.sabedoria}" onkeyup="manager.updateSheetStat(${index}, 'sabedoria', this.value)"></p>
                     <p><strong>Percepção:</strong><input type="number" value="${player.percepcao}" onkeyup="manager.updateSheetStat(${index}, 'percepcao', this.value)"></p>
+                    <p><strong>Status EN:</strong><input type="number" value="${player.statusen}" onkeyup="manager.updateSheetStat(${index}, 'statusen', this.value)"></p>
                 </div>
                 
                 <div class="info-block border col-7">
@@ -240,11 +245,23 @@ class PlayerManager {
                     <ul>
                         ${player.passivas.map((passiva, i) => `
                             <li>
-                                <input type="text" value="${passiva}" onkeyup="manager.updatePlayerPassiva(${index}, ${i}, this.value)">
-                                <img width="15px" height="15px" src="./assets/icons/trash-solid.svg" alt="Deletar" onclick="manager.removePassiva(${index}, ${i})">
+                                <input type="text" value="${passiva}" onkeyup="manager.updateTecPas('passivas', ${index}, ${i}, this.value)">
+                                <img width="15px" height="15px" src="./assets/icons/trash-solid.svg" alt="Deletar" onclick="manager.removeTecPas('passivas', ${index}, ${i})">
                             </li>`).join('')}
                     </ul>
-                    <button class="border" onclick="manager.addPassiva(${index})">+ Adicionar Passiva</button>
+                    <button class="border" onclick="manager.addTecPas('passivas', ${index})">+ Adicionar Passiva</button>
+                </div>
+
+                <div class="info-block border col-10">
+                    <h3 class="info-block-title">Técnicas</h3>
+                    <ul>
+                        ${player.tecnicas.map((tecnica, i) => `
+                            <li>
+                                <input type="text" value="${tecnica}" onkeyup="manager.updateTecPas('tecnicas', ${index}, ${i}, this.value)">
+                                <img width="15px" height="15px" src="./assets/icons/trash-solid.svg" alt="Deletar" onclick="manager.removeTecPas('tecnicas', ${index}, ${i})">
+                            </li>`).join('')}
+                    </ul>
+                    <button class="border" onclick="manager.addTecPas('tecnicas', ${index})">+ Adicionar Técnica</button>
                 </div>
             </div>
         `;
