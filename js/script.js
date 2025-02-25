@@ -77,6 +77,9 @@ class PlayerManager {
 
     updatePlayerName(index, newName) {
         this.players[index].name = newName;
+        if(this.currentPlayerActive == index){
+            this.showPlayerDetails(index)
+        }
         this.savePlayers();
     }
 
@@ -97,6 +100,10 @@ class PlayerManager {
             this.players[index][stat] = eval(`${this.players[index][stat]}${expression}`);
             this.savePlayers();
             this.renderPlayers();
+
+            if(this.currentPlayerActive == index){
+                this.showPlayerDetails(index)
+            }
         } catch (error) {
             console.error("Erro ao calcular expressão", error);
         }
