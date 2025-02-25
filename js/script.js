@@ -18,8 +18,6 @@ class PlayerManager {
         this.players.forEach((player, index) => {
             player.vida = player.vida || 0
             player.manab = Number(player.manab) || 0
-            console.log(player.name)
-            console.log(player.manab)
             player.mana = player.mana || 0
             player.name = player.name || ''
             player.clan = player.clan || ""
@@ -97,7 +95,12 @@ class PlayerManager {
 
     updateStat(index, stat, expression) {
         try {
-            this.players[index][stat] = eval(`${this.players[index][stat]}${expression}`);
+            if(expression.charAt(0) == '='){
+                this.players[index][stat] = Number(expression.substr(1))
+            }else{
+                this.players[index][stat] = eval(`${this.players[index][stat]}${expression}`);
+            }
+
             this.savePlayers();
             this.renderPlayers();
 
@@ -163,7 +166,7 @@ class PlayerManager {
                         </div>
                         <div title="Mana (Mana + Mana base + 10 * Status EN)" class="stats" onclick="manager.promptStatUpdate(${index}, 'mana')">
                             <img width="15px" height="15px" src="./assets/icons/droplet-solid.svg" alt="Mana">
-                            <p>${player.manab + player.mana + (10 * player.statusen)}</p>
+                            <p>${Number(player.manab) + Number(player.mana) + (10 * player.statusen)}</p>
                         </div>
                     </div>
                 </div>`;
