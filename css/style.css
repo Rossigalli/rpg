@@ -43,7 +43,7 @@ input{
 #SideContainer{
     width: 100vw;
     max-width: 300px;
-    height: fit-content;
+    
     max-height: 100vh;
 
     display: flex;

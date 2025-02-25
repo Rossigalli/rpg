@@ -7,9 +7,36 @@ function toggleSidebar(){
 class PlayerManager {
     constructor() {
         this.players = JSON.parse(localStorage.getItem("players")) || [];
+        this.populateDefault()
+
         this.sidebar = document.getElementById("Sidebar");
         this.main = document.getElementById("Main");
         this.renderPlayers();
+    }
+
+    populateDefault(){
+        this.players.forEach((player, index) => {
+            player.vida = player.vida || 0,
+            player.mana = player.mana || 0,
+            player.name = player.name || ''
+            player.clan = player.clan || "",
+            player.caminho = player.caminho || "",
+            player.vitalidade = player.vitalidade || 0,
+            player.energia = player.energia || 0,
+            player.ataque = player.ataque || 0,
+            player.defesa = player.defesa || 0,
+            player.arma = player.arma || "",
+            player.armadura = player.armadura || "",
+            player.forca = player.forca || 0,
+            player.destreza = player.destreza || 0,
+            player.resistencia = player.resistencia || 0,
+            player.resiliencia = player.resiliencia || 0,
+            player.precisao = player.precisao || 0,
+            player.sabedoria = player.sabedoria || 0,
+            player.percepcao = player.percepcao || 0,
+            player.passivas = player.passivas || []
+        })
+
     }
 
     savePlayers() {
