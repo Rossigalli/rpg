@@ -14,11 +14,16 @@
         <main id="Main">
         
         </main>
-        <div id="File-in-out">
-            <img title="Exportar" width="20px" height="20px" id="Export-btn" src="./assets/icons/download-solid.svg" alt="exportar">
-            <img title="Importar" width="20px" height="20px" id="Import-btn" src="./assets/icons/file-import-solid.svg" alt="importar">
+        <div id="SideContainer">
+            <div id="SidebarHeader" class="border">
+                <div id="File-in-out">
+                    <img title="Exportar" width="20px" height="20px" id="Export-btn" src="./assets/icons/download-solid.svg" alt="exportar">
+                    <img title="Importar" width="20px" height="20px" id="Import-btn" src="./assets/icons/file-import-solid.svg" alt="importar">
+                </div>
+                <img width="20px" height="20px" class="toggleSidebarBtn" src="./assets/icons/bars-solid.svg" alt="Menu" onclick="toggleSidebar()">
+            </div>
+            <div id="Sidebar" class="border"></div>
         </div>
-        <div id="Sidebar"></div>
     </div>
 
     <script src="./js/script.js"></script>

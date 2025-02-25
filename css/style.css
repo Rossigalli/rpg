@@ -1,8 +1,20 @@
 *{
     padding: 0;
     margin: 0;
+    list-style: none;
 }
 
+input{
+    min-width: 10px;
+    width: 0px;
+    flex-grow: 1;
+    text-overflow: ellipsis;
+
+    &:disabled{
+        background-color: transparent;
+        border: none;
+    }
+}
 
 .container{
     width: 100vw;
@@ -14,11 +26,12 @@
 
 #Main{
     flex-grow: 1;
+    padding: 24px;
+    overflow-y: auto;
 }
 
 #File-in-out{
     display: flex;
-    flex-direction: column;
     gap: 12px;
     padding: 16px;
 
@@ -27,17 +40,47 @@
         cursor: pointer;
     }
 }
-
-#Sidebar{
+#SideContainer{
     width: 100vw;
     max-width: 300px;
-    height: 100vh;
-    
+    height: fit-content;
+    max-height: 100vh;
+
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+    
+    background-color: white;
 
-    border: 1px solid black;
+    &:has(#Sidebar.active){
+        height: 100vh;
+    }
+}
+
+#Sidebar{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     overflow: hidden auto;
+}
+
+#SidebarHeader{
+    display: flex;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    justify-content: space-between;
+    align-items: center;
+
+    .toggleSidebarBtn{
+        padding: 16px;
+        display: none;
+
+        &:hover{
+            cursor: pointer;
+        }
+    }
 }
 
 .player{
@@ -46,11 +89,17 @@
     display: flex;
     align-items: center;
 
-    border: 1px solid black;
+    &.active{
+        background-color: lightgray;
+    }
 }
 .player-image{
     width: 80px;
     height: 80px;
+
+    &:hover{
+        cursor: pointer;
+    }
 }
 
 .player-description{
@@ -66,15 +115,7 @@
     align-items: center;
 
     input{
-        min-width: 10px;
-        width: 0px;
-        flex-grow: 1;
         text-overflow: ellipsis;
-
-        &:disabled{
-            background-color: transparent;
-            border: none;
-        }
     }
 
     img{
@@ -111,13 +152,130 @@
 
 #NewPlayer{
     height: fit-content;
+    width: 100%;
     text-align: center;
     padding: 8px 0px;
-    border: 1px solid black;
+    position:sticky;
 
+    bottom: 0px;
+    margin-top: auto;
+
+    background-color: white;
     &:hover{
         background-color: gray;
         color: white;
         cursor: pointer;
+    }
+}
+
+
+.player-sheet{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 12px;
+    padding-top: 22px;
+    gap: 12px;
+
+    .info-block{
+        flex-grow: 1;
+        padding: 12px;
+        box-sizing: border-box;
+        position: relative;
+
+        p{
+            padding: 4px 0px;
+            display: flex;
+        }
+
+        
+        &.col-10{
+            width: 100%;
+        }
+        &.col-7{
+            flex-basis: 68%;
+        }
+        &.col-3{
+            flex-basis: 30%;
+        }
+
+        &:has(.info-block-title){
+            padding-top: 22px;
+        }
+
+        .info-block-title{
+            position: absolute;
+            transform: translateY(calc(-100% - 11px));
+            background-color: white;
+            width: fit-content;
+            padding: 0 8px;
+        }
+
+        ul {
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            overflow-y: auto;
+            max-height: 140px;
+            li {
+                display: flex;
+                gap: 8px;
+                padding: 5px 0px;
+    
+                img{
+                    padding: 5px;
+            
+                    &:hover{
+                        transform: scale(1.2);
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+
+        button{
+            width: 100%;
+            height: fit-content;
+            text-align: center;
+            padding: 8px 0px;
+            margin-top: 8px;
+            background-color: transparent;
+        
+            &:hover{
+                background-color: gray;
+                color: white;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+.border{
+    border: 1px solid black;
+    box-sizing: border-box;
+}
+
+
+@media (max-width: 600px){
+    #Main{
+        margin-top: 64px;
+    }
+    #SideContainer{
+        position: absolute;
+        max-width: 100%;
+        padding: 0px 10px;
+        box-sizing: border-box;
+
+        #Sidebar{
+            display: none;
+
+            &.active{
+                display: flex;
+            }
+        }
+    }
+    #SidebarHeader{
+        .toggleSidebarBtn{
+            display: block;
+        }
     }
 }
