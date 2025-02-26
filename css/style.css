@@ -246,6 +246,11 @@ input{
                 cursor: pointer;
             }
         }
+
+        textarea{
+            resize: none;
+            width: 100%;
+        }
     }
 }
 

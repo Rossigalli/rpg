@@ -121,7 +121,7 @@ class PlayerManager {
         }
     }
 
-    updatePlayerTecPas(stats, index, tecPasIndex, value) {
+    updateTecPas(stats, index, tecPasIndex, value) {
         this.players[index][stats][tecPasIndex] = value;
         this.savePlayers();
     }
@@ -267,7 +267,7 @@ class PlayerManager {
                     <ul>
                         ${player.tecnicas.map((tecnica, i) => `
                             <li>
-                                <input type="text" value="${tecnica}" onkeyup="manager.updateTecPas('tecnicas', ${index}, ${i}, this.value)">
+                                <textarea rows="4" onkeyup="manager.updateTecPas('tecnicas', ${index}, ${i}, this.value)" >${tecnica}</textarea>
                                 <img width="15px" height="15px" src="./assets/icons/trash-solid.svg" alt="Deletar" onclick="manager.removeTecPas('tecnicas', ${index}, ${i})">
                             </li>`).join('')}
                     </ul>
